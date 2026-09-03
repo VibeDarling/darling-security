@@ -54,7 +54,7 @@ target_link_libraries(secd
 	libtrustd
 	CoreFoundation
 	IOKit
-	CoreData
+	#CoreData
 	#ApplePushService # missing
 	CloudKit
 	SystemConfiguration
