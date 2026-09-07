@@ -53,7 +53,8 @@ foreach(dir ${InclDirs})
 	set(EXP_IN_FLAGS "${EXP_IN_FLAGS} -I${dir}")
 endforeach()
 
-set(EXP_IN_FLAGS "${EXP_IN_FLAGS} ${CMAKE_C_FLAGS}")
+string(REGEX REPLACE "-?-target[ =][^ ]+" "" EXP_C_FLAGS "${CMAKE_C_FLAGS}")
+set(EXP_IN_FLAGS "${EXP_IN_FLAGS} ${EXP_C_FLAGS}")
 
 separate_arguments(EXP_IN_FLAGS)
 
