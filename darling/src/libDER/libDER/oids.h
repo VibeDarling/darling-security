@@ -51,10 +51,13 @@ typedef size_t DERSize;
 /*
  * Primary representation of a block of memory.
  */
+#ifndef _DERITEM_DEFINED_
+#define _DERITEM_DEFINED_
 typedef struct {
     DERByte		*data;
     DERSize		length;
 } DERItem;
+#endif
 #endif
 
 /* Algorithm oids. */

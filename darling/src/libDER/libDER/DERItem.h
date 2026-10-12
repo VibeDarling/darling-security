@@ -35,7 +35,8 @@ __BEGIN_DECLS
 /*
  * Primary representation of a block of memory.
  */
-#ifndef DARLING
+#if !defined(DARLING) && !defined(_DERITEM_DEFINED_)
+#define _DERITEM_DEFINED_
 // DERItem is already defined in libDER/oids.h
 typedef struct {
     DERByte        *DER_counted_by(length) data;
