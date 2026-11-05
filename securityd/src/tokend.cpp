@@ -26,6 +26,7 @@
 // tokend - internal tracker for a tokend smartcard driver process
 //
 #include "tokend.h"
+#include "tokend_privdrop.h"
 #include <security_utilities/logging.h>
 
 
@@ -97,17 +98,9 @@ uint32 TokenDaemon::maxScore() const
 void TokenDaemon::childAction()
 {
 	
-	// permanently relinquish high privilege
-#if defined(NDEBUG)
-	UnixError::check(::setgid(mGid));
-	UnixError::check(::setuid(mUid));
-#else //NDEBUG
-#ifndef __clang_analyzer__
-	// best effort, okay if not
-	::setgid(mGid);
-	::setuid(mUid);
-#endif // clang_analyzer
-#endif //NDEBUG
+	// permanently relinquish high privilege; a failed drop must never reach exec
+	if (int err = tokendDropPrivileges(mUid, mGid))
+		UnixError::throwMe(err);
 	secinfo("tokend", "uid=%d gid=%d", getuid(), getgid());
 
 	// go run the tokend
