@@ -7,7 +7,8 @@
 #include <unistd.h>
 
 // Returns 0 on success or an errno value. Never best effort: a root process
-// must end up as uid/gid with no way back, otherwise this reports failure.
+// must end up with the requested real/effective uid and gid, otherwise this
+// reports failure. Supplementary groups are not cleared.
 // A process that is not root holds no privilege to relinquish.
 inline int tokendDropPrivileges(uid_t uid, gid_t gid)
 {
